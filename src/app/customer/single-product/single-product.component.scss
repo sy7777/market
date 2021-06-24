@@ -1,0 +1,19 @@
+.content{
+  width: 100vw;
+  height: 27rem;
+  // background: #000;
+  padding: 1rem;
+  display: flex;
+  justify-content: space-around;
+  .left{
+    width: 35%;
+    height: 100%;
+    background: scroll #fefefe;
+  }
+  .right{
+    width: 55%;
+    height: 100%;
+    background: rgb(175, 140, 140);
+  }
+
+}
