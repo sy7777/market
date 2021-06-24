@@ -4,14 +4,15 @@ import { CustomerComponent } from './customer.component';
 import { CustomerRoutingModule } from './customer-routing.module';
 import { SharedModule } from '@app/shared/shared.module';
 
-
-
 @NgModule({
   declarations: [CustomerComponent],
   imports: [
     CommonModule,
     CustomerRoutingModule,
-    SharedModule
+    SharedModule,
+
   ]
 })
-export class CustomerModule { }
+export class CustomerModule {
+
+ }

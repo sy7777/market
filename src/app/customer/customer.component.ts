@@ -6,5 +6,18 @@ import { Component } from '@angular/core';
   styleUrls: ['./customer.component.less']
 })
 export class CustomerComponent {
-  title = 'market';
+
+  public innerContentTitle: string = "Option 1";
+  public subNavList1 = ["Option 1", "Option 2", "Option 3", "Option 4"];
+  public navItemIndex;
+  constructor(){
+
+  }
+
+  passItem(item){
+    console.log(item);
+    this.innerContentTitle = item;
+  }
+
+
 }
