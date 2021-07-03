@@ -45,4 +45,9 @@ export class FirebaseService {
     let query = this.fireStore.collection("yqm_products").where("product_cate","==", cate);
     return query;
   }
+
+  getNav(){
+    let query = this.fireStore.collection("yqm_products_nav");
+    return query;
+  }
 }

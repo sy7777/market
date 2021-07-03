@@ -9,13 +9,14 @@ import { FirebaseService } from '@app/services/firebase.service';
 })
 export class CustomerComponent {
 
-  public innerContentTitle: string = "Option 1";
+  public innerContentTitle: string = "";
   public subNavList1 = ["Option 1", "Option 2", "Option 3", "Option 4"];
   public navItemIndex;
   imgUrl = "assets/mylogo.png";
   public productsList = [];
 
   unsubscribe: any;
+  navList = [];
   constructor(public router:Router,
      private firebase: FirebaseService){
   }
@@ -23,7 +24,9 @@ export class CustomerComponent {
   ngOnInit(): void {
     //Called after the constructor, initializing input properties, and the first call to ngOnChanges.
     //Add 'implements OnInit' to the class.
-    this.productsList = this.getProductsFromDB();
+    // this.productsList = this.getProductsFromDB();
+    // this.navList = this.getNavFromDB();
+    this.renderCate();
   }
   ngOnDestroy(): void{
     if (this.unsubscribe) {
@@ -35,11 +38,11 @@ export class CustomerComponent {
     this.innerContentTitle = item;
   }
 
-  getProductsFromDB(){
+  getProductsFromDB(cate){
     if(this.unsubscribe){
       this.unsubscribe();
     }
-    this.unsubscribe = this.firebase.getProducts("Dog")
+    this.unsubscribe = this.firebase.getProducts(cate)
     .onSnapshot(snapshot=>{
       let dataList = [];
       snapshot.forEach(item=>{
@@ -47,13 +50,43 @@ export class CustomerComponent {
         dataList.push(item.data())
       })
       this.productsList = dataList;
+      console.log(this.productsList);
     })
     return this.productsList;
   }
 
+  getNavFromDB(){
+    if(this.unsubscribe){
+      this.unsubscribe();
+    }
+    this.unsubscribe = this.firebase.getNav()
+    .onSnapshot(snapshot=>{
+      let dataList = [];
+      snapshot.forEach(item=>{
+        // console.log(item.data());
+        dataList.push(item.data())
+      })
+      this.navList = dataList.map(value => value.nav_cate);
+      console.log(this.navList);
+      console.log("!111");
+
+    })
+    return this.navList;
+  }
+
+  cateList =  [];
+  renderCate(){
+    this.getNavFromDB();
+    console.log(this.navList);
+    for(let i=0; i<this.navList.length;i++){
+      this.getProductsFromDB(this.navList[i]);
+    }
+    console.log(this.productsList);
+
+  }
   readMore(){
     this.router.navigateByUrl('single-product')
-    this.getProductsFromDB();
+    // this.getProductsFromDB();
     console.log(this.productsList);
   }
 
